@@ -1,0 +1,40 @@
+<div class="container pt-4">
+  <div class="row">
+    <div class="col-4">
+      <input-component
+        numbersOnly
+        class="sm-search-form"
+        [(ngModel)]="companyTextBoxValue"
+        name="companyTextBoxValue"
+        [max]="17"
+        #input
+        required
+        placeHolder="Insert company name"
+      ></input-component>
+    </div>
+    <div class="col-2">
+      <datepicker-component
+        name="to"
+        (dateToChangeEvent)="getFromDate($event)"
+      ></datepicker-component>
+    </div>
+    <div class="col-2">
+      <datepicker-component
+        name="from"
+        (dateFromChangeEvent)="getToDate($event)"
+      ></datepicker-component>
+    </div>
+    <div class="col">
+      <button type="button" class="btn btn-primary" (click)="OnSearch()">
+        Search
+      </button>
+    </div>
+    <div class="row pt-5">
+      <app-company-details
+        [company]="company"
+        [unixFromDate]="unixFromDate"
+        [unixToDate]="unixToDate"
+      ></app-company-details>
+    </div>
+  </div>
+</div>
