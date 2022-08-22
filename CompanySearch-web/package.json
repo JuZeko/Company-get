@@ -20,7 +20,10 @@
     "@angular/router": "~13.1.0",
     "@ng-bootstrap/ng-bootstrap": "^12.1.2",
     "@popperjs/core": "^2.11.6",
+    "apexcharts": "^3.35.5",
     "bootstrap": "^5.2.0",
+    "core-js": "^3.24.1",
+    "ng-apexcharts": "^1.7.1",
     "rxjs": "^7.4.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"

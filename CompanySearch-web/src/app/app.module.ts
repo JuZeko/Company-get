@@ -7,9 +7,16 @@ import { AppComponent } from './app.component';
 import { CompanyMenuComponent } from './components/company-menu/company-menu.component';
 import { CompanyDetailsComponent } from './components/company-details/company-details.component';
 import { StockHistoryComponent } from './components/stock-history/stock-history.component';
+import { CommonInformationComponent } from './components/common-information/common-information.component';
 
 @NgModule({
-  declarations: [AppComponent, CompanyMenuComponent, CompanyDetailsComponent, StockHistoryComponent],
+  declarations: [
+    AppComponent,
+    CompanyMenuComponent,
+    CompanyDetailsComponent,
+    StockHistoryComponent,
+    CommonInformationComponent,
+  ],
   imports: [BrowserModule, AppRoutingModule, SharedModule],
   providers: [],
   bootstrap: [AppComponent],

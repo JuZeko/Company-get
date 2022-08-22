@@ -1,22 +1,30 @@
-<table class="table">
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Company name</th>
-      <th scope="col">Country</th>
-      <th scope="col">Currency</th>
-      <th scope="col">Weburl</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th scope="row">1</th>
-      <td (click)="OnClick()">{{ company?.name }}</td>
-      <td>{{ company?.country }}</td>
-      <td>{{ company?.currency }}</td>
-      <td>{{ company?.weburl }}</td>
-    </tr>
-  </tbody>
-</table>
+<app-common-information> </app-common-information>
 
-<app-stock-history *ngIf="showStocks"></app-stock-history>
+<div class="pt-5">
+  <table class="table pt-4">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Company name</th>
+        <th scope="col">Country</th>
+        <th scope="col">Currency</th>
+        <th scope="col">Weburl</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row">1</th>
+        <td (click)="OnClick()">{{ company?.name }}</td>
+        <td>{{ company?.country }}</td>
+        <td>{{ company?.currency }}</td>
+        <td>{{ company?.weburl }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<app-stock-history
+  [stock]="stock"
+  class="pt-3"
+  *ngIf="stock"
+></app-stock-history>

@@ -1,10 +1,12 @@
 import {
   Component,
+  ElementRef,
   EventEmitter,
   Input,
   OnChanges,
   Output,
   SimpleChanges,
+  ViewChild,
 } from '@angular/core';
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 
@@ -18,24 +20,36 @@ export class DatepickerComponent {
   @Output() dateFromChangeEvent = new EventEmitter<number>();
   @Output() dateToChangeEvent = new EventEmitter<number>();
   @Input() name!: string;
+  @ViewChild('datePickerRef') datePickerRef!: ElementRef;
 
   public dateChanged(): void {
     if (this.name == 'from') {
-      console.log('dsada');
       this.dateFromChangeEvent.emit(this.formatToUnixTimeStamp());
     } else {
       this.dateToChangeEvent.emit(this.formatToUnixTimeStamp());
     }
   }
 
-  formatToUnixTimeStamp(): number {
-    var unixformat = Math.floor(
-      new Date(
-        this.model.year,
-        this.model.month - 1,
-        this.model.day
-      ).getTime() / 1000
-    );
-    return unixformat;
+  public formatToUnixTimeStamp(): any {
+    if (
+      this.model.year !== null &&
+      this.model.month - 1 !== null &&
+      this.model.day !== null
+    ) {
+      var unixformat = Math.floor(
+        new Date(
+          this.model.year,
+          this.model.month - 1,
+          this.model.day
+        ).getTime() / 1000
+      );
+      return unixformat;
+    } else {
+      return undefined;
+    }
+  }
+
+  public focusInput() {
+    this.datePickerRef.nativeElement.focus();
   }
 }

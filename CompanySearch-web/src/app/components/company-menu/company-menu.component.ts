@@ -1,10 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap/datepicker/ngb-date-struct';
-import { InputComponent } from 'src/shared/components/textbox/input.component';
+import { DatepickerComponent } from 'src/shared/components/datepicker/datepicker.component';
+import { TestingComponent } from 'src/shared/components/testing/testing/testing.component';
 import { CompanyDto } from 'src/shared/dtos/company.dto';
 import { CompanyService } from 'src/shared/services/company.service';
-import { noNumbersValidator } from 'src/shared/validators/no-numbers';
 
 @Component({
   selector: 'app-company-menu',
@@ -12,7 +11,12 @@ import { noNumbersValidator } from 'src/shared/validators/no-numbers';
   styleUrls: ['./company-menu.component.scss'],
 })
 export class CompanyMenuComponent implements OnInit {
-  @ViewChild('textBoxRef', { read: InputComponent, static: false })
+  @ViewChild('textBoxRef', { read: TestingComponent, static: false })
+  textBoxRef!: TestingComponent;
+  @ViewChild('datePickerFromRef', { read: DatepickerComponent, static: false })
+  datePickerFromRef!: DatepickerComponent;
+  @ViewChild('datePickerToRef', { read: DatepickerComponent, static: false })
+  datePickerToRef!: DatepickerComponent;
   public companyTextBoxValue!: string;
   public company!: CompanyDto;
   public date?: NgbDateStruct;
@@ -24,10 +28,13 @@ export class CompanyMenuComponent implements OnInit {
   ngOnInit(): void {}
 
   public OnSearch(): void {
-    this.companyService
-      .getCompany(this.companyTextBoxValue)
-      .subscribe((company) => (this.company = company));
-    console.log(this.company.name);
+    if (this.textBoxRef.companyNameForm.get('companyName')?.valid) {
+      this.companyService
+        .getCompany(this.textBoxRef.companyNameForm.get('companyName')?.value)
+        .subscribe((company) => (this.company = company));
+    } else {
+      this.textBoxRef.focusInput();
+    }
   }
 
   public getToDate(unixDate: number): void {

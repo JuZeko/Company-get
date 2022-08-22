@@ -1,1 +1,10 @@
-<p>stock-history works!</p>
+<h2 style="text-align: center" class="pt-4">Company stock history</h2>
+<div id="chart">
+  <apx-chart
+    [series]="chartOptions.series"
+    [chart]="chartOptions.chart"
+    [xaxis]="chartOptions.xaxis"
+    [yaxis]="chartOptions.yaxis"
+    [title]="chartOptions.title"
+  ></apx-chart>
+</div>
