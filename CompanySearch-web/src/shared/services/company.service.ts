@@ -11,7 +11,7 @@ import { StockPriceDto } from '../dtos/stock.dto';
 export class CompanyService {
   constructor(private http: HttpClient) {}
 
-  getCompany(companyName: string): Observable<CompanyDto> {
+  public getCompany(companyName: string): Observable<CompanyDto> {
     return this.http.get<CompanyDto>(
       environment.baseUrl +
         'company' +
@@ -20,11 +20,11 @@ export class CompanyService {
     );
   }
 
-  getStockPriceHistory(
+  public getStockPriceHistory(
     unixFromDate: number,
     unixToDate: number,
     companyName: string
-  ) {
+  ): Observable<StockPriceDto> {
     return this.http.get<StockPriceDto>(
       environment.baseUrl +
         'stock' +

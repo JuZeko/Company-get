@@ -1,4 +1,5 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { DatepickerComponent } from 'src/shared/components/datepicker/datepicker.component';
 import { TestingComponent } from 'src/shared/components/testing/testing/testing.component';
 import { CompanyDto } from 'src/shared/dtos/company.dto';
@@ -17,18 +18,20 @@ export class CompanyDetailsComponent implements OnInit {
   @Input() company!: CompanyDto;
   @Input() unixToDate!: number;
   @Input() unixFromDate!: number;
+  @Input() companyName: string = '';
+
   @ViewChild('datePickerFromRef', { read: ElementRef })
   datePickerFromRef!: ElementRef;
   @ViewChild('datePickerToRef', { read: ElementRef })
   datePickerToRef!: ElementRef;
-
+  public callRespone: any;
   public showStocks: boolean = false;
   public stock?: any;
   private stockString!: string;
   private stringObject: any;
 
   constructor(
-    private companyService: CompanyService,
+    public companyService: CompanyService,
     private companyMenuComponent: CompanyMenuComponent
   ) {}
 
@@ -42,8 +45,11 @@ export class CompanyDetailsComponent implements OnInit {
           this.unixToDate,
           this.company?.ticker
         )
-        .subscribe((stock) => (this.stockString = JSON.stringify(stock)));
-      this.stringObject = JSON.parse(this.stockString);
+        .subscribe((response: StockPriceDto) => {
+          this.callRespone = response;
+          this.stockString = JSON.stringify(this.callRespone);
+          this.stringObject = JSON.parse(this.stockString);
+        });
 
       this.stock = this.stringObject as stock;
       this.showStocks = !this.showStocks;

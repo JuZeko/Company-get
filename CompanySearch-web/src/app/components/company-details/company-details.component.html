@@ -24,6 +24,7 @@
 </div>
 
 <app-stock-history
+  companyName="{{ company.ticker }}"
   [stock]="stock"
   class="pt-3"
   *ngIf="stock"

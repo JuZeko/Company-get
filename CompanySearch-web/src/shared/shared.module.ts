@@ -10,6 +10,10 @@ import { TestingComponent } from './components/testing/testing/testing.component
 import { InputComponent } from './components/textbox/input.component';
 import { CompanyService } from './services/company.service';
 import { NgApexchartsModule } from 'ng-apexcharts';
+import { StockHistoryComponent } from 'src/app/components/stock-history/stock-history.component';
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { EventService } from 'src/app/services/event.service';
 
 @NgModule({
   declarations: [
@@ -17,11 +21,14 @@ import { NgApexchartsModule } from 'ng-apexcharts';
     DatepickerComponent,
     TestingComponent,
     NumbersOnlyDirective,
+    StockHistoryComponent,
   ],
   exports: [
     InputComponent,
     DatepickerComponent,
+    StockHistoryComponent,
     FormsModule,
+    NgxSpinnerModule,
     TestingComponent,
     ReactiveFormsModule,
     NumbersOnlyDirective,
@@ -29,6 +36,8 @@ import { NgApexchartsModule } from 'ng-apexcharts';
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
+    NgxSpinnerModule,
     FormsModule,
     ReactiveFormsModule,
     BrowserModule,
@@ -38,6 +47,6 @@ import { NgApexchartsModule } from 'ng-apexcharts';
     HttpClientModule,
     NgbModule,
   ],
-  providers: [CompanyService],
+  providers: [CompanyService, EventService],
 })
 export class SharedModule {}

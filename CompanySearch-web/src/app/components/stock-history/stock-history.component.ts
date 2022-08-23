@@ -1,4 +1,5 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import * as ApexCharts from 'apexcharts';
 import {
   ChartComponent,
   ApexAxisChartSeries,
@@ -7,6 +8,8 @@ import {
   ApexXAxis,
   ApexTitleSubtitle,
 } from 'ng-apexcharts';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { EventService } from 'src/app/services/event.service';
 import { stock } from 'src/shared/interfaces/stock.interface';
 
 export type ChartOptions = {
@@ -25,10 +28,11 @@ export type ChartOptions = {
 export class StockHistoryComponent implements OnInit {
   @ViewChild('chart') chart!: ChartComponent;
   @Input() stock?: stock;
+  @Input() companyName?: string = '';
   public chartOptions: Partial<ChartOptions> | any;
   public data1: any[] = [];
 
-  constructor() {
+  constructor(private eventService: EventService) {
     this.chartOptions = {
       series: [
         {
@@ -56,9 +60,33 @@ export class StockHistoryComponent implements OnInit {
   }
 
   ngOnInit() {
-    debugger;
-    console.log(this.stock);
-    this.stock?.c.forEach((element, index) => {
+    this.eventService.receivedMessage().subscribe((d) => {
+      console.log(this.chartOptions);
+      //clear chart data
+      this.chartOptions([
+        {
+          data: [],
+        },
+      ]);
+    });
+
+    if (this.stock!.c.length) {
+      for (let index = 0, len = this.stock!.c.length; index < len; ++index) {
+        this.data1.push({
+          x: this.stock?.t[index],
+          y: [
+            this.stock?.o[index],
+            this.stock?.h[index],
+            this.stock?.l[index],
+            this.stock?.c[index],
+          ],
+        });
+      }
+    }
+  }
+
+  public updateStocks(): void {
+    for (let index = 0, len = this.stock!.c.length; index < len; ++index) {
       this.data1.push({
         x: this.stock?.t[index],
         y: [
@@ -68,11 +96,7 @@ export class StockHistoryComponent implements OnInit {
           this.stock?.c[index],
         ],
       });
-    });
-  }
-
-  public hello() {
-    alert('hehe');
+    }
   }
 
   public generateDayWiseTimeSeries(baseval: any, count: any, yrange: any) {

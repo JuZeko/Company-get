@@ -42,6 +42,7 @@
      + req.query.name +"&resolution=1&from=" + req.query.unixFromDate +"&to=" + req.query.unixToDate +  "&token=cbvqih2ad3idf21il3b0")
     .then((result) => {
      data = result.data;
+     console.log(data); 
      res.send(data)
     })
     .catch((err) => {
