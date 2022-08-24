@@ -5,15 +5,15 @@ import { BehaviorSubject, Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class EventService {
-  private subject = new BehaviorSubject<string>('burger');
+  private subject = new BehaviorSubject<boolean>(true);
 
   constructor() {}
 
-  sendMessage(message: string) {
+  sendMessage(message: boolean) {
     this.subject.next(message);
   }
 
-  receivedMessage(): Observable<string> {
+  receivedMessage(): Observable<boolean> {
     return this.subject.asObservable();
   }
 }

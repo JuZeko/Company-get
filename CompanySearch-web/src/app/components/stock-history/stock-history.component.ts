@@ -60,16 +60,6 @@ export class StockHistoryComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.eventService.receivedMessage().subscribe((d) => {
-      console.log(this.chartOptions);
-      //clear chart data
-      this.chartOptions([
-        {
-          data: [],
-        },
-      ]);
-    });
-
     if (this.stock!.c.length) {
       for (let index = 0, len = this.stock!.c.length; index < len; ++index) {
         this.data1.push({
@@ -86,6 +76,7 @@ export class StockHistoryComponent implements OnInit {
   }
 
   public updateStocks(): void {
+    console.log('das');
     for (let index = 0, len = this.stock!.c.length; index < len; ++index) {
       this.data1.push({
         x: this.stock?.t[index],
@@ -97,19 +88,5 @@ export class StockHistoryComponent implements OnInit {
         ],
       });
     }
-  }
-
-  public generateDayWiseTimeSeries(baseval: any, count: any, yrange: any) {
-    var i = 0;
-    var series = [];
-    while (i < count) {
-      var y =
-        Math.floor(Math.random() * (yrange.max - yrange.min + 1)) + yrange.min;
-
-      series.push([baseval, y]);
-      baseval += 86400000;
-      i++;
-    }
-    return series;
   }
 }

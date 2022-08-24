@@ -1,5 +1,6 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { EventService } from 'src/app/services/event.service';
 import { DatepickerComponent } from 'src/shared/components/datepicker/datepicker.component';
 import { TestingComponent } from 'src/shared/components/testing/testing/testing.component';
 import { CompanyDto } from 'src/shared/dtos/company.dto';
@@ -19,7 +20,6 @@ export class CompanyDetailsComponent implements OnInit {
   @Input() unixToDate!: number;
   @Input() unixFromDate!: number;
   @Input() companyName: string = '';
-
   @ViewChild('datePickerFromRef', { read: ElementRef })
   datePickerFromRef!: ElementRef;
   @ViewChild('datePickerToRef', { read: ElementRef })
@@ -29,13 +29,18 @@ export class CompanyDetailsComponent implements OnInit {
   public stock?: any;
   private stockString!: string;
   private stringObject: any;
-
+  public ShowHistorystock?: boolean = false;
   constructor(
     public companyService: CompanyService,
-    private companyMenuComponent: CompanyMenuComponent
+    private companyMenuComponent: CompanyMenuComponent,
+    public eventService: EventService
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.eventService.receivedMessage().subscribe((value) => {
+      this.ShowHistorystock = value;
+    });
+  }
 
   public OnClick(): void {
     if (this.isDateValid()) {
@@ -53,6 +58,7 @@ export class CompanyDetailsComponent implements OnInit {
 
       this.stock = this.stringObject as stock;
       this.showStocks = !this.showStocks;
+      this.ShowHistorystock = true;
     }
   }
 
