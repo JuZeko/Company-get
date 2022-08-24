@@ -24,7 +24,6 @@ export class CompanyMenuComponent implements OnInit {
   public date?: NgbDateStruct;
   public unixToDate!: number;
   public unixFromDate!: number;
-
   constructor(
     private companyService: CompanyService,
     private eventService: EventService
@@ -37,7 +36,9 @@ export class CompanyMenuComponent implements OnInit {
       this.companyService
         .getCompany(this.textBoxRef.companyNameForm.get('companyName')?.value)
         .subscribe((company) => (this.company = company));
-      this.eventService.sendMessage('he');
+      this.eventService.sendMessage(false);
+
+      console.log(this.eventService.receivedMessage());
     } else {
       this.textBoxRef.focusInput();
     }
