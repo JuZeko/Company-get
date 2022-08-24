@@ -9,11 +9,11 @@ import {
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
-  selector: 'app-testing',
-  templateUrl: './testing.component.html',
-  styleUrls: ['./testing.component.scss'],
+  selector: 'app-input',
+  templateUrl: './input.component.html',
+  styleUrls: ['./input.component.scss'],
 })
-export class TestingComponent implements OnInit {
+export class InputComponent implements OnInit {
   companyNameForm!: FormGroup;
   @ViewChild('InputRef')
   InputRef!: ElementRef;

@@ -1,14 +1,12 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { ToastrService } from 'ngx-toastr';
 import { EventService } from 'src/app/services/event.service';
-import { DatepickerComponent } from 'src/shared/components/datepicker/datepicker.component';
-import { TestingComponent } from 'src/shared/components/testing/testing/testing.component';
 import { CompanyDto } from 'src/shared/dtos/company.dto';
 import { StockPriceDto } from 'src/shared/dtos/stock.dto';
 import { stock } from 'src/shared/interfaces/stock.interface';
 import { CompanyService } from 'src/shared/services/company.service';
 import { CompanyMenuComponent } from '../company-menu/company-menu.component';
-import { StockHistoryComponent } from '../stock-history/stock-history.component';
 
 @Component({
   selector: 'app-company-details',
@@ -33,7 +31,9 @@ export class CompanyDetailsComponent implements OnInit {
   constructor(
     public companyService: CompanyService,
     private companyMenuComponent: CompanyMenuComponent,
-    public eventService: EventService
+    public eventService: EventService,
+    private spinner: NgxSpinnerService,
+    private toastr: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -44,6 +44,7 @@ export class CompanyDetailsComponent implements OnInit {
 
   public OnClick(): void {
     if (this.isDateValid()) {
+      this.spinner.show();
       this.companyService
         .getStockPriceHistory(
           this.unixFromDate,
@@ -54,11 +55,16 @@ export class CompanyDetailsComponent implements OnInit {
           this.callRespone = response;
           this.stockString = JSON.stringify(this.callRespone);
           this.stringObject = JSON.parse(this.stockString);
+          this.stock = this.stringObject as stock;
         });
 
-      this.stock = this.stringObject as stock;
       this.showStocks = !this.showStocks;
       this.ShowHistorystock = true;
+      setTimeout(() => {
+        this.spinner.hide();
+      }, 4000);
+    } else {
+      this.toastr.warning('Check your inputs');
     }
   }
 

@@ -13,8 +13,18 @@
     </thead>
     <tbody>
       <tr>
-        <th scope="row">1</th>
-        <td (click)="OnClick()">{{ company?.name }}</td>
+        <th scope="row" *ngIf="company?.name == '1'; else elseBlock"></th>
+
+        <ng-template #elseBlock> <th scope="row">#</th></ng-template>
+        <td>
+          <button
+            (click)="OnClick()"
+            class="btn btn-light"
+            *ngIf="company?.name"
+          >
+            {{ company?.name }}
+          </button>
+        </td>
         <td>{{ company?.country }}</td>
         <td>{{ company?.currency }}</td>
         <td>{{ company?.weburl }}</td>
@@ -22,6 +32,16 @@
     </tbody>
   </table>
 </div>
+
+<ngx-spinner
+  bdColor="rgba(255,255,255,0.1)"
+  size="medium"
+  color="#de80cd"
+  type="ball-spin"
+  name="primary"
+  [fullScreen]="false"
+>
+</ngx-spinner>
 
 <app-stock-history
   companyName="{{ company.ticker }}"

@@ -1,11 +1,11 @@
 import { Directive, ElementRef, HostListener } from '@angular/core';
 
 @Directive({
-  selector: '[numbersOnly]',
+  selector: '[lettersOnly]',
 })
-export class NumbersOnlyDirective {
+export class LettersOnlyDirective {
   navigationKeys: Array<string> = ['Backspace']; //Add keys as per requirement
-  InputRestriction: string | RegExp = '[a-zA-Z]';
+  InputRestriction: string | RegExp = '[a-zA-Z ]';
   constructor(private _el: ElementRef) {}
 
   @HostListener('keypress', ['$event'])

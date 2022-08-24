@@ -9,6 +9,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'datepicker-component',
@@ -22,6 +23,8 @@ export class DatepickerComponent {
   @Input() name!: string;
   @ViewChild('datePickerRef') datePickerRef!: ElementRef;
 
+  constructor() {}
+
   public dateChanged(): void {
     if (this.name == 'from') {
       this.dateFromChangeEvent.emit(this.formatToUnixTimeStamp());
@@ -31,11 +34,8 @@ export class DatepickerComponent {
   }
 
   public formatToUnixTimeStamp(): any {
-    if (
-      this.model.year !== null &&
-      this.model.month - 1 !== null &&
-      this.model.day !== null
-    ) {
+    debugger;
+    if (this.model) {
       var unixformat = Math.floor(
         new Date(
           this.model.year,

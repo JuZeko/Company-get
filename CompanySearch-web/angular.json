@@ -31,7 +31,7 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss","node_modules/ngx-spinner/animations/ball-spin.css"
+              "src/styles.scss","node_modules/ngx-spinner/animations/ball-spin.css","node_modules/ngx-toastr/toastr.css" 
             ],
             "scripts": ["node_modules/apexcharts/dist/apexcharts.min.js"]
           },

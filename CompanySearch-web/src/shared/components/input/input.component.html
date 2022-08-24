@@ -1,0 +1,26 @@
+<form [formGroup]="companyNameForm">
+  <div class="form-group">
+    <div
+      class="alertMessage"
+      *ngIf="companyNameForm.controls['companyName']?.errors?.['maxlength']"
+    >
+      <p>Company name is to long</p>
+    </div>
+
+    <div class="row">
+      <input
+        [ngClass]="{
+          'is-invalid':
+            (companyNameForm.get('companyName')?.touched ||
+              companyNameForm.get('companyName')?.dirty) &&
+            !companyNameForm.get('companyName')?.valid
+        }"
+        type="text"
+        class="form-control"
+        #InputRef
+        formControlName="companyName"
+        placeholder="Insert company name"
+      />
+    </div>
+  </div>
+</form>

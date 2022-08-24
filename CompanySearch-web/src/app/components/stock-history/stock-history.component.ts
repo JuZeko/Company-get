@@ -60,7 +60,7 @@ export class StockHistoryComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (this.stock!.c.length) {
+    if (this.stock?.c.length !== undefined) {
       for (let index = 0, len = this.stock!.c.length; index < len; ++index) {
         this.data1.push({
           x: this.stock?.t[index],
@@ -72,21 +72,6 @@ export class StockHistoryComponent implements OnInit {
           ],
         });
       }
-    }
-  }
-
-  public updateStocks(): void {
-    console.log('das');
-    for (let index = 0, len = this.stock!.c.length; index < len; ++index) {
-      this.data1.push({
-        x: this.stock?.t[index],
-        y: [
-          this.stock?.o[index],
-          this.stock?.h[index],
-          this.stock?.l[index],
-          this.stock?.c[index],
-        ],
-      });
     }
   }
 }

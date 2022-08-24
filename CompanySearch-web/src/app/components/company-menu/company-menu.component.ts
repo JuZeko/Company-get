@@ -1,8 +1,9 @@
 import { Component, OnInit, Output, ViewChild } from '@angular/core';
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap/datepicker/ngb-date-struct';
+import { ToastrService } from 'ngx-toastr';
 import { EventService } from 'src/app/services/event.service';
 import { DatepickerComponent } from 'src/shared/components/datepicker/datepicker.component';
-import { TestingComponent } from 'src/shared/components/testing/testing/testing.component';
+import { InputComponent } from 'src/shared/components/input/input.component';
 import { CompanyDto } from 'src/shared/dtos/company.dto';
 import { CompanyService } from 'src/shared/services/company.service';
 
@@ -12,8 +13,8 @@ import { CompanyService } from 'src/shared/services/company.service';
   styleUrls: ['./company-menu.component.scss'],
 })
 export class CompanyMenuComponent implements OnInit {
-  @ViewChild('textBoxRef', { read: TestingComponent, static: false })
-  textBoxRef!: TestingComponent;
+  @ViewChild('textBoxRef', { read: InputComponent, static: false })
+  textBoxRef!: InputComponent;
   @ViewChild('datePickerFromRef', { read: DatepickerComponent, static: false })
   datePickerFromRef!: DatepickerComponent;
   @ViewChild('datePickerToRef', { read: DatepickerComponent, static: false })
@@ -26,7 +27,8 @@ export class CompanyMenuComponent implements OnInit {
   public unixFromDate!: number;
   constructor(
     private companyService: CompanyService,
-    private eventService: EventService
+    private eventService: EventService,
+    private toastr: ToastrService
   ) {}
 
   ngOnInit(): void {}
@@ -35,12 +37,16 @@ export class CompanyMenuComponent implements OnInit {
     if (this.textBoxRef.companyNameForm.get('companyName')?.valid) {
       this.companyService
         .getCompany(this.textBoxRef.companyNameForm.get('companyName')?.value)
-        .subscribe((company) => (this.company = company));
+        .subscribe((company) => {
+          this.company = company;
+          if (!company.country) {
+            this.toastr.warning('Company do not exist');
+          }
+        });
       this.eventService.sendMessage(false);
-
-      console.log(this.eventService.receivedMessage());
     } else {
       this.textBoxRef.focusInput();
+      this.toastr.info('Please input company name');
     }
   }
 
